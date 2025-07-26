@@ -17,6 +17,6 @@ app.use(cors({credentials:true}))
 
 // API end Points
 app.get('/',(req,res)=> res.send('API is Working'))
-app.use('api/auth',authRouter)
+app.use('/api/auth',authRouter)
 
 app.listen(port,()=>console.log(`Server started on PORT:${port}`))
