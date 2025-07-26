@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import userModel from '../models/usermodel.js';
 import transporter from '../config/nodemailer.js';
+import userMOdel from '../models/usermodel.js';
 
 
 
@@ -152,6 +153,29 @@ export const logout = async (req,res) => {
     
   } catch (error) {
     res.json({success:false,message:error.message})
+    
+  }
+  
+ }
+
+ export const verifyEmail = async (req,res) => {
+  const {userId,otp} = req.body;
+
+  if(!userId || !otp){
+    return res.json({success:false, message:'Missing Details'})
+  }
+  try {
+    const user = await userModel.findById(userId);
+
+    if(!user){
+      return res.json({success:false,message:'User not found'})
+    }
+    if(user.verifyOtp === '' || user.verifyOtp  !== otp){
+      return res.json({success:false,message:'Invaild OTP'})
+    }
+    
+  } catch (error) {
+    return res.json({success:false,message:error.message})
     
   }
   
