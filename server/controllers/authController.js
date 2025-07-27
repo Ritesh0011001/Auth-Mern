@@ -173,6 +173,15 @@ export const logout = async (req,res) => {
     if(user.verifyOtp === '' || user.verifyOtp  !== otp){
       return res.json({success:false,message:'Invaild OTP'})
     }
+    if(user.verifyOtpExpireAt < Date.now()){
+      return res.json({success:false,message:'OTP Expired'})
+    }
+    user.isAccountVerified = true;
+    user.verifyOtp = '';
+    user.verifyOtpExpireAt = 0;
+
+    await user.save();
+    return res.json({success:true,message:'Email verified successfully'})
     
   } catch (error) {
     return res.json({success:false,message:error.message})
