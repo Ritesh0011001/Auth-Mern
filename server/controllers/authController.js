@@ -1,6 +1,5 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import userModel from '../models/usermodel.js';
 import transporter from '../config/nodemailer.js';
 import userMOdel from '../models/usermodel.js';
 
@@ -158,6 +157,8 @@ export const logout = async (req,res) => {
   
  }
 
+ // Verify the Email Using OTO
+
  export const verifyEmail = async (req,res) => {
   const {userId,otp} = req.body;
 
@@ -185,6 +186,20 @@ export const logout = async (req,res) => {
     
   } catch (error) {
     return res.json({success:false,message:error.message})
+    
+  }
+  
+ }
+
+ // check is user is Authenticated
+
+ export const isAuthenticated= async (req,res) => {
+  try {
+    return res.json({success:true})
+    
+  } catch (error) {
+    res.json({success:false,message:error.messsage})
+    
     
   }
   
