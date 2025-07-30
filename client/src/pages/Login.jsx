@@ -9,7 +9,7 @@ const Login = () => {
 
   const navigate = useNavigate()
 
-  const {backendUrl, setIsLoggedin} = useContext(AppContext)
+  const {backendUrl, setIsLoggedin, getUserData} = useContext(AppContext)
 
 
   const [state, setState] = useState("Sign Up");
@@ -27,6 +27,7 @@ const Login = () => {
        const {data} = await axios.post(backendUrl + '/api/auth/register',{name,email,password})
        if(data.success){
         setIsLoggedin(true)
+        await getUserData()
         navigate('/')
        }else{
         toast.error(data.message)
@@ -38,6 +39,7 @@ const Login = () => {
         const {data} = await axios.post(backendUrl + '/api/auth/login',{email,password})
        if(data.success){
         setIsLoggedin(true)
+        await getUserData()
         navigate('/')
        }else{
         toast.error(data.message)
@@ -61,7 +63,7 @@ const Login = () => {
       <img onClick={()=>navigate('/')}
         src={assets.logo}
         alt=""
-        className="absolute left-5 sm:left-20 top-5 w-28 sm:w-32 cursor-ponter"
+        className="absolute left-5 sm:left-20 top-5 w-28 sm:w-32 cursor-pointer"
       />
 
       <div className="bg-slate-900 p-10 rounded-lg shadow-lg w-full sm:w-96 text-indigo-300 text-sm">
