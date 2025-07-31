@@ -158,7 +158,7 @@ export const logout = async (req,res) => {
   
  }
 
- // Verify the Email Using OTO
+ // Verify the Email Using OTP
 
  export const verifyEmail = async (req,res) => {
   const {userId,otp} = req.body;
